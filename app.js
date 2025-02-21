@@ -5,13 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 // 引入路由
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
+var adminRouter = require('./routes/admin');
 
 // 默认读取项目根目录 .env 环境变量
 require('dotenv').config(); // 引入环境变量
 // 引入数据库连接
-require('./dao/dbConnection');
+require('./dao/db');
 
 // 创建服务器实例
 var app = express();
@@ -30,8 +31,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 使用路由中间件
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+app.use('/admin', adminRouter); // localhost:3000/admin/***
 
 // 错误处理
 // catch 404 and forward to error handler

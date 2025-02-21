@@ -11,16 +11,9 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
   logging: false, // log 在控制台不显示
 });
 
-async function connect() {
-  // 测试连接  是否成功
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-}
-connect();
+// 向外暴露连接实例
+module.exports = sequelize;
+
 
 // const mysql = require("mysql");
 // const config = require("./config");

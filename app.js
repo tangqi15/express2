@@ -8,6 +8,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+// 默认读取项目根目录 .env 环境变量
+require('dotenv').config(); // 引入环境变量
 // 引入数据库连接
 require('./dao/dbConnection');
 

@@ -21,40 +21,34 @@ class ServiceError extends Error {
 
 
 // 文件上传错误    413
-const UploadError = class extends ServiceError {
+exports.UploadError = class extends ServiceError {
     constructor(message) {
         super(message, 413);
     }
 }
 // 禁止访问错误  token 过期之类
-const ForbiddenError = class extends ServiceError {
+exports.ForbiddenError = class extends ServiceError {
     constructor(message) {
         super(message, 401);
     }
 }
 // 验证错误
-const ValidationError = class extends ServiceError {
+exports.ValidationError = class extends ServiceError {
     constructor(message) {
         super(message, 406);
     }
 }
 // 无资源错误   404
-const NotFoundError = class extends ServiceError {
+exports.NotFoundError = class extends ServiceError {
     constructor() {
         super('not found', 406);
     }
 }
 // 未知错误   （其他错误）
-const UnkonwnError = class extends ServiceError {
+exports.UnkonwnError = class extends ServiceError {
     constructor() {
         super('server internal error', 500);
     }
 }
 
-module.exports = {
-    UploadError,
-    ForbiddenError,
-    ValidationError,
-    NotFoundError,
-    UnkonwnError
-}
+module.exports.ServiceError = ServiceError;

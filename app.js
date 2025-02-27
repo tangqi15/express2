@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 使用路由中间件
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
-app.use('/admin', adminRouter); // localhost:3000/admin/***
+app.use('/api/admin', adminRouter); // localhost:3000/admin/***
 
 // 错误处理
 // catch 404 and forward to error handler

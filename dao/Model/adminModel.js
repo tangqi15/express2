@@ -11,10 +11,6 @@ module.exports = sequelize.define("admin", {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     password: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -1,6 +1,8 @@
 // 自定义错误
 // 当错误发生的时候，我们捕获到发生的错误，然后抛出这个错误，让错误处理中间件捕获到这个错误，然后返回给前端
 
+const { formatResponse } = require("./tool");
+
 /**
  * 业务处理错误基类
  * 
@@ -14,7 +16,9 @@ class ServiceError extends Error {
     }
 
     // 方法  调用这个方法  返回给客户端一个格式
-    toResponseJSON() {}
+    toResponseJSON() {
+        return formatResponse(this.code, this.message, "")
+    }
 }
 
 // throw new ServiceError('用户名不存在', 10001);

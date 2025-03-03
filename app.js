@@ -3,8 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-
+const { expressjwt } = require("express-jwt"); // 验证客户端token
+const { ForbiddenError } = require("./utils/error")
 // 默认读取项目根目录 .env 环境变量
 require('dotenv').config(); // 引入环境变量
 // 引入数据库连接
@@ -14,6 +14,7 @@ require('./dao/db');
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
+const md5 = require('md5');
 
 
 // 创建服务器实例
@@ -32,6 +33,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 验证 客户端token  接口
+app.use(expressjwt(
+  {
+    secret: md5(process.env.JWT_SECRET), // 秘钥
+    algorithms: ["HS256"],  // 算法(新版本jwt 必须要求指定算法) 
+  }
+).unless({
+  // 需要排除  token验证的 路由
+  path: [
+    {"url": "/api/admin/login", methods: ["POST"]}
+  ] 
+}));
+
+
 // 使用路由中间件
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
@@ -43,15 +58,13 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// error handler  错误处理， 一旦发生错误，就会到这里来
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  if (err.name === "UnauthorizedError") {
+    res.send(new ForbiddenError('token 失效，请重新登录').toResponseJSON())
+  } else {
+    next(err);
+  }
 });
 
 module.exports = app;

@@ -22,6 +22,7 @@ const md5 = require("md5"); // 导入md5加密模块
   if (!adminCount) {
     await adminModel.create({
       loginId: "admin",
+      name: "超级管理员",
       loginPwd: md5("123456"),
     });
     console.log("初始化管理员成功");

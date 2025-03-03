@@ -11,7 +11,5 @@ module.exports.loginDao  = async function(loginInfo) {
             loginPwd: loginInfo.loginPwd, // md5 加密
         }
     })
-    console.log(result, 'result');
-    
     return result;
 }

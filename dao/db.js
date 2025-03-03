@@ -1,6 +1,6 @@
 // 该文件负责 给数据做一个初始化操作
 const sequelize = require("./dbConnection"); // 数据库连接实例
-const adminModel = require("./Model/adminModel"); // 导入模型
+const adminModel = require("./model/adminModel"); // 导入模型
 const md5 = require("md5"); // 导入md5加密模块
 
 (async function () {
@@ -22,8 +22,7 @@ const md5 = require("md5"); // 导入md5加密模块
   if (!adminCount) {
     await adminModel.create({
       loginId: "admin",
-      username: "超级管理员",
-      password: md5("123456"),
+      loginPwd: md5("123456"),
     });
     console.log("初始化管理员成功");
   }

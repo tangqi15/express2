@@ -4,15 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-// 引入路由
-// var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
-var adminRouter = require('./routes/admin');
 
 // 默认读取项目根目录 .env 环境变量
 require('dotenv').config(); // 引入环境变量
 // 引入数据库连接
 require('./dao/db');
+
+// 引入路由
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
+var adminRouter = require('./routes/admin');
+
 
 // 创建服务器实例
 var app = express();

@@ -4,14 +4,13 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../dbConnection');
 
 // 定义模型
-// module.exports = sequelize.isDefined("admin", {
 module.exports = sequelize.define("admin", {
     // 表字段
     loginId: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    password: {
+    loginPwd: {
         type: DataTypes.STRING,
         allowNull: false,
     }

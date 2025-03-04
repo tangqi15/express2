@@ -51,7 +51,7 @@ exports.NotFoundError = class extends ServiceError {
 // 未知错误   （其他错误）
 exports.UnkonwnError = class extends ServiceError {
     constructor() {
-        super('server internal error', 500);
+        super('server internal error 服务器其他错误', 500);
     }
 }
 

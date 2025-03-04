@@ -4,7 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { expressjwt } = require("express-jwt"); // 验证客户端token
-const { ForbiddenError, UnkonwnError, ServiceError } = require("./utils/error")
+const { ForbiddenError, UnkonwnError, ServiceError } = require("./utils/error");
+const session = require('express-session');
+
 // 默认读取项目根目录 .env 环境变量
 require('dotenv').config(); // 引入环境变量
 // 引入数据库连接
@@ -14,6 +16,7 @@ require('express-async-errors'); // 异步错误处理
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
+var captchaRouter = require('./routes/captcha');
 const md5 = require('md5');
 
 // 创建服务器实例
@@ -31,7 +34,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: process.env.SESSION_SECRET, // 秘钥
+  resave: true,
+  saveUninitialized: true, // 未初始化
 
+}));
 // 验证 客户端token  接口
 app.use(expressjwt(
   {
@@ -41,7 +49,8 @@ app.use(expressjwt(
 ).unless({
   // 需要排除  token验证的 路由
   path: [
-    {"url": "/api/admin/login", methods: ["POST"]}
+    {"url": "/api/admin/login", methods: ["POST"]},
+    {"url": "/res/captcha", methods: ["GET"]}
   ] 
 }));
 
@@ -50,7 +59,7 @@ app.use(expressjwt(
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 app.use('/api/admin', adminRouter); // localhost:3000/admin/***
-
+app.use('/res/captcha', captchaRouter);
 // 错误处理
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

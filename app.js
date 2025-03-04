@@ -4,18 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { expressjwt } = require("express-jwt"); // 验证客户端token
-const { ForbiddenError } = require("./utils/error")
+const { ForbiddenError, UnkonwnError, ServiceError } = require("./utils/error")
 // 默认读取项目根目录 .env 环境变量
 require('dotenv').config(); // 引入环境变量
 // 引入数据库连接
 require('./dao/db');
-
+require('express-async-errors'); // 异步错误处理
 // 引入路由
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 const md5 = require('md5');
-
 
 // 创建服务器实例
 var app = express();
@@ -60,10 +59,15 @@ app.use(function(req, res, next) {
 
 // error handler  错误处理， 一旦发生错误，就会到这里来
 app.use(function(err, req, res, next) {
+  console.log("err.name =============> ", err.name);
+  console.log("err.message =============> ", err.message);
+  
   if (err.name === "UnauthorizedError") {
     res.send(new ForbiddenError('token 失效，请重新登录').toResponseJSON())
+  } else if (err instanceof ServiceError){
+    res.send(err.toResponseJSON())
   } else {
-    next(err);
+    res.send(new UnkonwnError().toResponseJSON())
   }
 });
 

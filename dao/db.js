@@ -17,8 +17,6 @@ const md5 = require("md5"); // 导入md5加密模块
   //   同步完成后，有一些表需要进行一些初始化操作
   // 我们需要先查询表有没有内容，如果没有，则插入一些默认数据
   const adminCount = await adminModel.count();
-  console.log(adminCount, "adminCount");
-
   if (!adminCount) {
     await adminModel.create({
       loginId: "admin",

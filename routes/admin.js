@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const { formatResponse, analysisToken } = require("../utils/tool");
-const { loginService } = require('../service/adminService');
+const { loginService, updateAdminService } = require('../service/adminService');
 
 /* POST  登录 */
 router.post('/login', async function(req, res, next) {
@@ -27,5 +27,11 @@ router.get('/whoami', async function(req, res, next) {
         "id": realToken.id,
     }))
 })
+
+// 修改管理员信息   
+router.put('/', async function(req, res, next) {
+    const result = await updateAdminService(req.body);
+    res.send(result);
+});
 
 module.exports = router;

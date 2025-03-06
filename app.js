@@ -17,6 +17,7 @@ require('express-async-errors'); // 异步错误处理
 // var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var captchaRouter = require('./routes/captcha');
+var bannerRouter = require('./routes/banner');
 const md5 = require('md5');
 
 // 创建服务器实例
@@ -60,6 +61,7 @@ app.use(expressjwt(
 // app.use('/users', usersRouter);
 app.use('/api/admin', adminRouter); // localhost:3000/admin/***
 app.use('/res/captcha', captchaRouter);
+app.use('/api/banner', bannerRouter);
 // 错误处理
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

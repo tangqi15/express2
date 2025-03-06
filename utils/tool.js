@@ -2,15 +2,7 @@ const jwt = require('jsonwebtoken');
 const md5 = require('md5');
 
 
-// 响应格式
-// {
-//     "code": code,
-//     "mas": "登录成功",
-//     "data": data,
-// }
-
 // 格式化要响应的数据
-
 module.exports.formatResponse = function(code, msg, data) {
     return {
         "code": code,
@@ -20,9 +12,17 @@ module.exports.formatResponse = function(code, msg, data) {
     }
 }
 
-
+// 解析token
 module.exports.analysisToken = function(token) {
-    // 解析
     const jwtToken = jwt.verify(token.split(" ")[1], md5(process.env.JWT_SECRET));
     return jwtToken;
+}
+
+// 梳理数组类型的响应数据
+module.exports.handleDataPattern = function(data) {
+    const arr = [];
+    for (const i of data) {
+        arr.push(i.dataValues)
+    }
+    return arr;
 }

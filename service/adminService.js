@@ -2,7 +2,7 @@
 const { loginDao, updateAdminDao } = require("../dao/adminDao");
 const md5 = require("md5");
 const jwt = require("jsonwebtoken");
-const { ValidationError } = require("../utils/error");
+const { ValidationError } = require("../utils/errors");
 const { formatResponse } = require("../utils/tool");
 // 登录
 module.exports.loginService = async function (loginInfo) {

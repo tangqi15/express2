@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { expressjwt } = require("express-jwt"); // 验证客户端token
-const { ForbiddenError, UnkonwnError, ServiceError } = require("./utils/error");
+const { ForbiddenError, UnkonwnError, ServiceError } = require("./utils/errors");
 const session = require('express-session');
 
 // 默认读取项目根目录 .env 环境变量
@@ -18,6 +18,7 @@ require('express-async-errors'); // 异步错误处理
 var adminRouter = require('./routes/admin');
 var captchaRouter = require('./routes/captcha');
 var bannerRouter = require('./routes/banner');
+var uploadRouter = require('./routes/upload');
 const md5 = require('md5');
 
 // 创建服务器实例
@@ -62,7 +63,8 @@ app.use(expressjwt(
 app.use('/api/admin', adminRouter); // localhost:3000/admin/***
 app.use('/res/captcha', captchaRouter);
 app.use('/api/banner', bannerRouter);
-// 错误处理
+app.use('/api/upload', uploadRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

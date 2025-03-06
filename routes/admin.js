@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const { formatResponse, analysisToken } = require("../utils/tool");
 const { loginService, updateAdminService } = require('../service/adminService');
-const { ValidationError } = require('../utils/error');
+const { ValidationError } = require('../utils/errors');
 
 /* POST  登录 */
 router.post('/login', async function(req, res, next) {

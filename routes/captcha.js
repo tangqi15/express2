@@ -8,7 +8,6 @@ const { getCaptchaService } = require("../service/captchaService");
 router.get("/", async function (req, res, next) {
   // 生成验证码
   const captcha = await getCaptchaService();
-  console.log(captcha.text, 'captcha');
   // TODO  为什么是  req 设置   
   req.session.captcha = captcha.text;
   // 设置响应头

@@ -5,10 +5,6 @@ const multer = require("multer");
 const { UploadError } = require("../utils/errors");
 
 router.post("/", async function (req, res, next) {
-  console.log(req.file , 'ccccccccccc   rq');
-  console.log(req , 'ccccccccccc   rq');
-  console.log(req.body , 'ccccccccccc   rq');
-  
   // single 方法 参数：  上传控件的 file   vue中 文件input name=“file”
   uploading.single("file")(req, res, function (err) {
     if (!req.file) {
@@ -24,8 +20,6 @@ router.post("/", async function (req, res, next) {
     } else {
       // 上传成功
       const path = "/static/uploads/" + req.file.filename;
-      console.log(path, 'path');
-      
       res.send(formatResponse(0, "", path));
     }
   });

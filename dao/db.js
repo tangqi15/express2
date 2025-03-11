@@ -3,6 +3,7 @@ const sequelize = require("./dbConnection"); // 数据库连接实例
 
 const adminModel = require("./model/adminModel"); // 数据模型
 const bannerModel = require("./model/bannerModel");
+const blogTypeModel = require("./model/blogTypeModel");
 
 
 const md5 = require("md5");

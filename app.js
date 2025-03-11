@@ -19,6 +19,7 @@ var adminRouter = require('./routes/admin');
 var captchaRouter = require('./routes/captcha');
 var bannerRouter = require('./routes/banner');
 var uploadRouter = require('./routes/upload');
+var blogTypeRouter = require('./routes/blogType');
 const md5 = require('md5');
 
 // 创建服务器实例
@@ -64,7 +65,7 @@ app.use('/api/admin', adminRouter); // localhost:3000/admin/***
 app.use('/res/captcha', captchaRouter);
 app.use('/api/banner', bannerRouter);
 app.use('/api/upload', uploadRouter);
-
+app.use('/api/blogType', blogTypeRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

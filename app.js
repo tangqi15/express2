@@ -20,6 +20,7 @@ var captchaRouter = require('./routes/captcha');
 var bannerRouter = require('./routes/banner');
 var uploadRouter = require('./routes/upload');
 var blogTypeRouter = require('./routes/blogType');
+var blogRouter = require('./routes/blog');
 const md5 = require('md5');
 
 // 创建服务器实例
@@ -66,6 +67,7 @@ app.use('/res/captcha', captchaRouter);
 app.use('/api/banner', bannerRouter);
 app.use('/api/upload', uploadRouter);
 app.use('/api/blogType', blogTypeRouter);
+app.use('/api/blog', blogRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

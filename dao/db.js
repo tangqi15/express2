@@ -1,14 +1,29 @@
 // 该文件负责对数据库进行一个初始化操作
 const sequelize = require("./dbConnection"); // 数据库连接实例
 
+// 引入模型 就会同步
 const adminModel = require("./model/adminModel"); // 数据模型
 const bannerModel = require("./model/bannerModel");
 const blogTypeModel = require("./model/blogTypeModel");
+const blogModel = require("./model/blogModel");
 
 
 const md5 = require("md5");
 
 (async function () {
+
+    // 定义模型之间的关联关系
+
+    // 文章和文章分类之间的关联
+    // 一对多关系
+    blogTypeModel.hasMany(blogModel, {
+        foreignKey: "categoryId", targetKey : "id"
+    });
+    // 属于
+    blogModel.belongsTo(blogTypeModel, {
+        foreignKey: "categoryId", targetKey : "id", as : "category"
+    });
+
     // 将数据模型和表进行同步
     await sequelize.sync({
         alter: true,

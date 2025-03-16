@@ -3,7 +3,7 @@
 var express = require("express");
 var router = express.Router();
 
-const { getBlogListService, addBlogService } = require("../service/blogService");
+const { getBlogListService, addBlogService, findBlogByIdService, updateBlogService, deleteBlogService } = require("../service/blogService");
 
 
 // 新增文章
@@ -23,8 +23,10 @@ router.get("/:id", async function(req, res, next){
 })
 
 // 修改其中一个博客
-router.put("/:id", async function(req, res, next){
-    res.send(await updateBlogService(req.params.id, req.body));
+router.post("/updateBlog", async function(req, res, next){
+    console.log(req.query, req.body, 'req.body222');
+    
+    res.send(await updateBlogService(req.body));
 })
 
 // 删除其中一个博客

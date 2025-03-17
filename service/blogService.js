@@ -1,7 +1,7 @@
 const { ValidationError } = require("../utils/errors");
 const { getBlogListDao, addBlogDao , getBlogOneDao, updateBlogInfoDao, deleteBlogInfoDao} = require("../dao/blogDao");
 const { addBlogToType } = require("../dao/blogTypeDao");
-const { formatResponse, handleDataPattern } = require("../utils/tool");
+const { formatResponse, handleDataPattern, handleTOC } = require("../utils/tool");
 const { validate } = require("validate.js");
 const blogTypeModel = require("../dao/model/blogTypeModel");
 
@@ -17,8 +17,11 @@ validate.validators.categoryIdIsExist = async function (value) {
 module.exports.addBlogService = async function (newBlogInfo) {
   // 处理 toc 目录  TODO
 
+  console.log(newBlogInfo, 'newBlogInfo')
+  newBlogInfo = handleTOC(newBlogInfo);
+  return;
   // 将处理好的 toc 格式转为 字符串  MOCK
-  newBlogInfo.toc = JSON.stringify('["a", "b]');
+   newBlogInfo.toc = JSON.stringify(newBlogInfo.toc);
 
   // 默认值初始化
   newBlogInfo.scanNumber = 0; // 初始阅读量

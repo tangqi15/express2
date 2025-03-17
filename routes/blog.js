@@ -8,6 +8,8 @@ const { getBlogListService, addBlogService, findBlogByIdService, updateBlogServi
 
 // 新增文章
 router.post("/", async function(req, res, next){
+    console.log(req.body, 'req.body');
+    
     res.send(await addBlogService(req.body));
 })
 
